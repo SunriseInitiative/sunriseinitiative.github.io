@@ -23,7 +23,6 @@ button {
     margin-top: 20px;
 }
 .navibar {
-    margin: 20px 0;
+    font-family: 'Lexend', sans-serif;
     background-color: darkgray;
-    font-family: 'Times New Roman';
 }
