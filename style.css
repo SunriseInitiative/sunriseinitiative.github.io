@@ -22,3 +22,8 @@ button {
     font-size: 1.5em;
     margin-top: 20px;
 }
+.dvd-bounce {
+    outline-width: 3px;
+    outline-style: solid;
+    outline-color: antiquewhite;
+}
