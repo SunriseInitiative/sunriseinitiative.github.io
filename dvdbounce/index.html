@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DVD Bounce</title>
+<style>
+  #container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+  }
+  #dvd {
+    position: absolute;
+    width: 200px; /* Adjust size as needed */
+    height: auto;
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <img id="dvd" src="dvdlogo.png"> <!-- Replace with your image path -->
+</div>
+
+<script>
+  const dvd = document.getElementById('dvd');
+  const container = document.getElementById('container');
+
+  let x = 0;
+  let y = 0;
+  let dx = 2; // Horizontal speed
+  let dy = 2; // Vertical speed
+
+  function update() {
+    x += dx;
+    y += dy;
+
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+    const dvdWidth = dvd.offsetWidth;
+    const dvdHeight = dvd.offsetHeight;
+
+    if (x + dvdWidth > containerWidth || x < 0) {
+      dx *= -1; // Reverse horizontal direction
+    }
+    if (y + dvdHeight > containerHeight || y < 0) {
+      dy *= -1; // Reverse vertical direction
+    }
+
+    dvd.style.left = x + 'px';
+    dvd.style.top = y + 'px';
+
+    requestAnimationFrame(update);
+  }
+
+  update();
+</script>
+
+</body>
+</html>
