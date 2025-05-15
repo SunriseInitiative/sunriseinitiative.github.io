@@ -102,8 +102,8 @@ button {
     }
 
     function getCardValue(card) {
-      if (['J', 'Q', 'K'].includes(card)) return 10;
-      if (card === 'A') return 11;
+      if (['J', 'Q', 'K'].includes(card.value)) return 10;
+      if (card.value === 'A') return 11;
       return parseInt(card.value);
     }
 
