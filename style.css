@@ -29,7 +29,7 @@ button {
 }
 td, th {
     padding: 5px;
-    text-align: center;
+    text-align: left;
     border: 1px solid #ddd;
 }
 .rubik-glitch-regular {
