@@ -1,72 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>DVD Bounce</title>
-<style>
-  #container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    overflow: hidden;
-  }
-  #dvd {
-    position: absolute;
- width: 20%; /* Adjust size as needed */
-    height: auto;
-  }
-  .dvd {
-    outline-width: 3px;
-    outline-style: solid;
-    outline-color: antiquewhite;
-}
-</style>
+  <title>DVD Bounce</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    #container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    #dvd {
+      position: absolute;
+      width: 20%; /* Adjust this if you want it smaller or larger */
+      height: auto;
+      outline: 3px solid antiquewhite;
+    }
+
+    #dvd img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-
-  <button onclick = "window.location.href='/';" >Back</button>
-
-
-  
-<div id="container" class="dvd-bounce">
-  <div outline_width="4px" outline_color="white" id="dvd" class = "dvd">
-    <img src="DVD bounce.svg">
+  <div id="container">
+    <div id="dvd">
+      <img src="DVD bounce.svg" alt="DVD Logo">
+    </div>
   </div>
-</div>
 
-<script>
-  const dvd = document.getElementById('dvd');
-  const container = document.getElementById('container');
+  <script>
+    const dvd = document.getElementById('dvd');
+    const container = document.getElementById('container');
 
-  let x = 0;
-  let y = 0;
-  let dx = 2; // Horizontal speed
-  let dy = 2; // Vertical speed
+    let x = 0;
+    let y = 0;
+    let dx = 2; // Horizontal speed
+    let dy = 2; // Vertical speed
 
-  function update() {
-    x += dx;
-    y += dy;
+    function update() {
+      x += dx;
+      y += dy;
 
-    const containerWidth = container.offsetWidth;
-    const containerHeight = container.offsetHeight;
-    const dvdWidth = dvd.offsetWidth;
-    const dvdHeight = dvd.offsetHeight;
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+      const dvdWidth = dvd.offsetWidth;
+      const dvdHeight = dvd.offsetHeight;
 
-    if (x + dvdWidth > containerWidth || x < 0) {
-      dx *= -1; // Reverse horizontal direction
+      if (x + dvdWidth > containerWidth || x < 0) {
+        dx *= -1; // Reverse horizontal direction
+      }
+      if (y + dvdHeight > containerHeight || y < 0) {
+        dy *= -1; // Reverse vertical direction
+      }
+
+      dvd.style.left = x + 'px';
+      dvd.style.top = y + 'px';
+
+      requestAnimationFrame(update);
     }
-    if (y + dvdHeight > containerHeight || y < 0) {
-      dy *= -1; // Reverse vertical direction
-    }
 
-    dvd.style.left = x + 'px';
-    dvd.style.top = y + 'px';
-
-    requestAnimationFrame(update);
-  }
-
-  update();
-</script>
-
+    update();
+  </script>
 </body>
 </html>
