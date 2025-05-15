@@ -32,3 +32,9 @@ td, th {
     text-align: center;
     border: 1px solid #ddd;
 }
+.rubik-glitch-regular {
+  font-family: "Rubik Glitch", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
