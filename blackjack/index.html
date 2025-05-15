@@ -39,6 +39,7 @@ button {
     <button onclick="window.location.href = '/'">
       Home
     </button>
+    <p>v1.3.2.15</p>
   </div>
   <h1>Blackjack</h1>
   
@@ -59,6 +60,10 @@ button {
   <button onclick="resetGame()">Reset</button>
 
   <div id="result"></div>
+
+  <div class="debug">
+    <p class = "card_list"></p>
+  </div>
 
   <script>
     const deck = [];
@@ -87,8 +92,8 @@ button {
     }
 
     function getCardValue(card) {
-      if (['J', 'Q', 'K'].includes(card.value)) return 10;
-      if (card.value === 'A') return 11;
+      if (['J', 'Q', 'K'].includes(card)) return 10;
+      if (card === 'A') return 11;
       return parseInt(card.value);
     }
 
@@ -100,10 +105,11 @@ button {
         let val = getCardValue(card);
         score += val;
         if (card.value === 'A') aceCount++;
+        document.getElementsByClassName("card_list")[0].innerHTML += card.value + card.suit + " ";
       }
 
       while (score > 21 && aceCount > 0) {
-        score -= 10;
+        score += 11;
         aceCount--;
       }
 
