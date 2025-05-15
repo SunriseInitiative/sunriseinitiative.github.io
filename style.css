@@ -27,3 +27,8 @@ button {
     outline-style: solid;
     outline-color: antiquewhite;
 }
+td, th {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
