@@ -115,7 +115,7 @@ button {
         let val = getCardValue(card);
         score += val;
         if (card.value === 'A') aceCount++;
-        document.getElementsByClassName("card_list")[0].innerHTML += card.value + card.suit + " ";
+        //document.getElementsByClassName("card_list")[0].innerHTML += card.value + card.suit + " ";
       }
 
       while (score > 21 && aceCount > 0) {
@@ -166,7 +166,7 @@ button {
 
     function endGame(message) {
       gameOver = true;
-      //document.getElementById('result').innerText = message;
+      document.getElementById('result').innerText = message;
     }
 
     function resetGame() {
