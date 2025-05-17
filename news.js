@@ -24,7 +24,7 @@ function UpdateNews() {
 }
 function UpdateMainNewsPage()
 {
-    const newsContainer = document.getElementById("newsContainer");
+    const newsContainer = document.getElementsByClassName("breaking-news");
     const newsItem = document.createElement("div");
     newsItem.className = "newsItem";
 
