@@ -24,15 +24,19 @@ function UpdateNews() {
 }
 function UpdateMainNewsPage()
 {
-    const newsContainer = document.getElementsByClassName("breaking-news")[0]; // Use [0] to get the element
+    const newsContainer = document.getElementsByClassName("breaking-news")[0];
     const newsItem = document.createElement("div");
     newsItem.className = "newsItem";
 
-    // Fetch and insert the article body
     fetch('articles/breakingnews.html')
         .then(response => response.text())
         .then(html => {
-            newsItem.innerHTML = html;
+            // Remove any <button> elements from the loaded HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const buttons = tempDiv.querySelectorAll('button');
+            buttons.forEach(btn => btn.remove());
+            newsItem.innerHTML = tempDiv.innerHTML;
             newsContainer.appendChild(newsItem);
         })
         .catch(error => {
