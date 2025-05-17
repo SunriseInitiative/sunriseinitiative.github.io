@@ -36,6 +36,7 @@ function UpdateMainNewsPage()
             newsContainer.appendChild(newsItem);
         })
         .catch(error => {
+            console.error("Failed to load article:", error);
             newsItem.innerHTML = "<p>Failed to load article.</p>";
             newsContainer.appendChild(newsItem);
         });

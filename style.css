@@ -48,4 +48,9 @@ td, th {
   margin: 20px 0;
   display: flex;
 }
+.newsarticle {
+    border-radius: 10px;
+    font-family: "Newsreader", system-ui;
+    padding: 20px;
+}
 

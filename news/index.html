@@ -9,7 +9,14 @@
     <body onload="UpdateMainNewsPage()">
         <h1>News</h1>
         <div id="news-container" class="newspreview">
-            <iframe src="articles/breakingnews.html" width="100%" height="500px" frameborder="0" border_radius="10px"></iframe>
+            <div class="news-article">
+                <h2>Latest News</h2>
+                <p id="latest-news"></p>
+            </div>
+            <div class="news-article">
+                <h2>Breaking News</h2>
+                <p id="breaking-news"></p>
+            </div>
         </div>
         <button onclick="window.location.href = '/'">Back to Home</button>
         <footer>v1.3.2.23</footer>
