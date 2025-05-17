@@ -24,7 +24,7 @@ function UpdateNews() {
 }
 function UpdateMainNewsPage()
 {
-    const newsContainer = document.getElementsByClassName("breaking-news");
+    const newsContainer = document.getElementsByClassName("breaking-news")[0]; // Use [0] to get the element
     const newsItem = document.createElement("div");
     newsItem.className = "newsItem";
 
