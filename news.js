@@ -16,5 +16,27 @@ function UpdateNews() {
     };
 
     UpdateNewsPreview(newsPreview);
+    const newsContainer = document.getElementById("newsContainer");
+    const newsItem = document.createElement("div");
+    newsItem.className = "newsItem";
+    
 
+}
+function UpdateMainNewsPage()
+{
+    const newsContainer = document.getElementById("newsContainer");
+    const newsItem = document.createElement("div");
+    newsItem.className = "newsItem";
+
+    // Fetch and insert the article body
+    fetch('articles/breakingnews.html')
+        .then(response => response.text())
+        .then(html => {
+            newsItem.innerHTML = html;
+            newsContainer.appendChild(newsItem);
+        })
+        .catch(error => {
+            newsItem.innerHTML = "<p>Failed to load article.</p>";
+            newsContainer.appendChild(newsItem);
+        });
 }
