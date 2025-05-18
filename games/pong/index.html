@@ -101,7 +101,13 @@
     }
 
     function collision(b, p) {
-      return b.x < p.x + p.width && b.x + b.radius > p.x && b.y < p.y + p.height && b.y + b.radius > p.y;
+      // Closest point on paddle to ball center
+      let closestX = Math.max(p.x, Math.min(b.x, p.x + p.width));
+      let closestY = Math.max(p.y, Math.min(b.y, p.y + p.height));
+      // Distance from ball center to closest point
+      let dx = b.x - closestX;
+      let dy = b.y - closestY;
+      return (dx * dx + dy * dy) < (b.radius * b.radius);
     }
 
     function update() {
