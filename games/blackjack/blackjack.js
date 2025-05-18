@@ -101,23 +101,17 @@ function stand() {
     const dealerScore = calculateScore(dealerCards);
 
     if (dealerScore > 21 || playerScore > dealerScore) {
-    endGame('You win!');
+    endGame('You win!', 2);
     } else if (dealerScore > playerScore) {
-    endGame('Dealer wins.');
+    endGame('Dealer wins.', -1);
     } else {
-    endGame("It's a draw.");
+    endGame("It's a draw.", 1);
     }
 }
 
-function endGame(message) {
+function endGame(message, code) {
     gameOver = true;
-    if (message.includes('win')) {
-        balance += bet * 2; // Player wins double the bet
-    }else if (message.includes('draw')) {
-        balance += bet; // Player gets back the bet
-    } else {
-        balance -= bet; // Player loses the bet
-    }
+    balance += bet * code;
     document.getElementById('balance').innerText = `Balance: $${balance}`;
     document.getElementById('result').innerText = message;
 }
