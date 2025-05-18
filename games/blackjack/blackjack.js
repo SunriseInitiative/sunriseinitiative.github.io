@@ -3,12 +3,18 @@ const suits = ['♠', '♥', '♦', '♣'];
 const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
 let balance = 1000; // Player's initial balance
-let bet = 0; // Player's bet
+let bet = 10; // Player's bet
 let betAmount = 0; // Amount to bet
 let betInput = document.getElementById('bet-amount');
 let playerCards = [];
 let dealerCards = [];
 let gameOver = false;
+
+function updateInfo() {
+
+    document.getElementById('balance').innerText = `Balance: $${balance}`;
+    document.getElementById('bet').innerText = `Bet: $${bet}`;
+}
 
 function createDeck() {
     deck.length = 0;
