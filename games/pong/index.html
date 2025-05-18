@@ -116,7 +116,7 @@
 
       // CPU AI
       let cpuCenter = cpu.y + cpu.height / 2;
-      let direction = (canvas.height/2)/(ball.y - cpuCenter)*100;
+      let direction = (ball.y - cpuCenter);
       cpu.y += direction * cpu.level/2;
 
       // User movement is handled by mouse
