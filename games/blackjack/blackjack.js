@@ -29,12 +29,13 @@ function createDeck() {
 function placeBet() {
     betAmount = parseInt(betInput.value);
     if (isNaN(betAmount) || betAmount <= 0 || betAmount > balance) {
-    alert('Invalid bet amount. Please enter a valid number.');
-    return;
+        alert('Invalid bet amount. Please enter a valid number.');
+        return;
     }
     bet = betAmount;
     balance -= bet;
     document.getElementById('balance').innerText = `Balance: $${balance}`;
+    document.getElementById('bet').innerText = `Bet: $${bet}`; // <-- Add this line
     resetGame();
 }
 
