@@ -104,6 +104,14 @@ function stand() {
 
 function endGame(message) {
     gameOver = true;
+    if (message.includes('win')) {
+        balance += bet * 2; // Player wins double the bet
+    }else if (message.includes('draw')) {
+        balance += bet; // Player gets back the bet
+    } else {
+        balance -= bet; // Player loses the bet
+    }
+    document.getElementById('balance').innerText = `Balance: $${balance}`;
     document.getElementById('result').innerText = message;
 }
 
