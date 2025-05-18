@@ -123,7 +123,9 @@ function stand() {
 
 function endGame(message, code = 0) {
     gameOver = true;
-    balance += bet * code;
+    bettedBalance += bet * code;
+    balance = bettedBalance;
+    bet = 0;
     updateInfo();
     document.getElementById('result').innerText = message;
 }
