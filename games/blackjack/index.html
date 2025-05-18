@@ -3,36 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Blackjack - Unblocked</title>
-  <style>
-body {
-    font-family:'Courier New', monospace;
-    background-color: green;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-.card-area {
-    margin: 20px 0;
-}
-.cards {
-    margin-top: 10px;
-    font-size: 1.2em;
-}
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-#result {
-    font-size: 1.5em;
-    margin-top: 20px;
-}
-.navibar {
-    font-family: 'Lexend', sans-serif;
-    background-color: darkgray;
-}
-</style>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="navibar">
@@ -52,6 +23,12 @@ button {
     
   </div>
   <h1>Blackjack</h1>
+
+  <div class="betting-area">
+    <label for="bet-amount">Bet Amount:</label>
+    <input type="number" id="betInput" value="10" min="50">
+    <button onclick="placeBet()">Place Bet</button>
+  </div>
   
   <div class="card-area">
     <h2>Player</h2>
@@ -75,111 +52,6 @@ button {
     <p class = "card_list"></p>
   </div>
 
-  <script>
-    const deck = [];
-    const suits = ['♠', '♥', '♦', '♣'];
-    const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-
-    let playerCards = [];
-    let dealerCards = [];
-    let gameOver = false;
-
-    function createDeck() {
-      deck.length = 0;
-      for (let suit of suits) {
-        for (let value of values) {
-          deck.push({ value, suit });
-        }
-      }
-      shuffle(deck);
-    }
-
-    function shuffle(deck) {
-      for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-      }
-    }
-
-    function getCardValue(card) {
-      if (['J', 'Q', 'K'].includes(card.value)) return 10;
-      if (card.value === 'A') return 11;
-      return parseInt(card.value);
-    }
-
-    function calculateScore(cards) {
-      let score = 0;
-      let aceCount = 0;
-
-      for (let card of cards) {
-        let val = getCardValue(card);
-        score += val;
-        if (card.value === 'A') aceCount++;
-        //document.getElementsByClassName("card_list")[0].innerHTML += card.value + card.suit + " ";
-      }
-
-      while (score > 21 && aceCount > 0) {
-        score += 11;
-        aceCount--;
-      }
-
-      return score;
-    }
-
-    function displayCards() {
-      document.getElementById('player-cards').innerText = playerCards.map(c => c.value + c.suit).join(' ');
-      document.getElementById('dealer-cards').innerText = dealerCards.map(c => c.value + c.suit).join(' ');
-      document.getElementById('player-score').innerText = calculateScore(playerCards);
-      document.getElementById('dealer-score').innerText = calculateScore(dealerCards);
-    }
-
-    function hit() {
-      if (gameOver) return;
-
-      playerCards.push(deck.pop());
-      displayCards();
-
-      if (calculateScore(playerCards) > 21) {
-        endGame('You busted! Dealer wins.');
-      }
-    }
-
-    function stand() {
-      if (gameOver) return;
-
-      while (calculateScore(dealerCards) < 17) {
-        dealerCards.push(deck.pop());
-      }
-
-      displayCards();
-      const playerScore = calculateScore(playerCards);
-      const dealerScore = calculateScore(dealerCards);
-
-      if (dealerScore > 21 || playerScore > dealerScore) {
-        endGame('You win!');
-      } else if (dealerScore > playerScore) {
-        endGame('Dealer wins.');
-      } else {
-        endGame("It's a draw.");
-      }
-    }
-
-    function endGame(message) {
-      gameOver = true;
-      document.getElementById('result').innerText = message;
-    }
-
-    function resetGame() {
-      createDeck();
-      playerCards = [deck.pop(), deck.pop()];
-      dealerCards = [deck.pop()];
-      gameOver = false;
-      document.getElementById('result').innerText = '';
-      displayCards();
-    }
-
-    // Initialize game on load
-    resetGame();
-  </script>
+  <script src="blackjack.js"></script>
 </body>
 </html>
