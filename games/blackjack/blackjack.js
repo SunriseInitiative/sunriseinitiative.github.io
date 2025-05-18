@@ -5,15 +5,26 @@ const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'
 let balance = 1000; // Player's initial balance
 let bet = 10; // Player's bet
 let betAmount = 0; // Amount to bet
-let betInput = document.getElementById('bet-amount');
+let betInput = document.getElementById('betInput');
 let playerCards = [];
 let dealerCards = [];
 let gameOver = false;
 
 function updateInfo() {
-
     document.getElementById('balance').innerText = `Balance: $${balance}`;
-    document.getElementById('bet').innerText = `Bet: $${bet}`;
+    document.getElementById('bet').innerText = `Bet Amount: $${bet}`;
+    betInput.value = bet; // Sync input with current bet
+
+    // Disable controls if game over or out of money
+    document.querySelector('button[onclick="hit()"]').disabled = gameOver || balance <= 0;
+    document.querySelector('button[onclick="stand()"]').disabled = gameOver || balance <= 0;
+    document.querySelector('button[onclick="resetGame()"]').disabled = balance <= 0;
+    document.querySelector('button[onclick*="placeBet"]').disabled = balance <= 0;
+
+    // Show out of money message
+    if (balance <= 0) {
+        document.getElementById('result').innerText = "You're out of money! Refresh to play again.";
+    }
 }
 
 function createDeck() {
@@ -34,8 +45,7 @@ function placeBet() {
     }
     bet = betAmount;
     balance -= bet;
-    document.getElementById('balance').innerText = `Balance: $${balance}`;
-    document.getElementById('bet').innerText = `Bet: $${bet}`; // <-- Add this line
+    updateInfo();
     resetGame();
 }
 
@@ -85,7 +95,7 @@ function hit() {
     displayCards();
 
     if (calculateScore(playerCards) > 21) {
-    endGame('You busted! Dealer wins.');
+    endGame('You busted! Dealer wins.', 0);
     }
 }
 
@@ -103,27 +113,35 @@ function stand() {
     if (dealerScore > 21 || playerScore > dealerScore) {
     endGame('You win!', 2);
     } else if (dealerScore > playerScore) {
-    endGame('Dealer wins.', -1);
+    endGame('Dealer wins.', 0);
     } else {
     endGame("It's a draw.", 1);
     }
 }
 
-function endGame(message, code) {
+function endGame(message, code = 0) {
     gameOver = true;
     balance += bet * code;
-    document.getElementById('balance').innerText = `Balance: $${balance}`;
+    updateInfo();
     document.getElementById('result').innerText = message;
 }
 
 function resetGame() {
+    if (balance <= 0) {
+        updateInfo();
+        return;
+    }
     createDeck();
     playerCards = [deck.pop(), deck.pop()];
     dealerCards = [deck.pop()];
     gameOver = false;
     document.getElementById('result').innerText = '';
     displayCards();
+    updateInfo();
 }
 
 // Initialize game on load
-resetGame();
+window.onload = function() {
+    updateInfo();
+    resetGame();
+};
