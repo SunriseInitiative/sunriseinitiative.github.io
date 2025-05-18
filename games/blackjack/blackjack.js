@@ -3,6 +3,7 @@ const suits = ['♠', '♥', '♦', '♣'];
 const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
 let balance = 1000; // Player's initial balance
+let bettedBalance = 0;
 let bet = 10; // Player's bet
 let betAmount = 0; // Amount to bet
 let betInput = document.getElementById('betInput');
@@ -38,13 +39,14 @@ function createDeck() {
 }
 
 function placeBet() {
+    bettedBalance = balance;
     betAmount = parseInt(betInput.value);
     if (isNaN(betAmount) || betAmount <= 0 || betAmount > balance) {
         alert('Invalid bet amount. Please enter a valid number.');
         return;
     }
     bet = betAmount;
-    balance -= bet;
+    bettedBalance -= bet;
     updateInfo();
     resetGame();
 }
