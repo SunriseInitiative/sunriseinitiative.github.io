@@ -1,0 +1,8 @@
+body {
+    font-family: Lexend;
+    background-image: "blueprintbg.png";
+}
+.main {
+    background-color: rgb(55, 55, 55);
+    padding: 20px;
+}
