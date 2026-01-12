@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expression Detector</title>
+
+    <!-- TensorFlow + Teachable Machine -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        #webcam-container canvas {
+            border: 3px solid #fff;
+        }
+
+        #expression-image {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #fff;
+            display: none;
+            object-fit: contain;
+            background: #000;
+        }
+
+        #label-container {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Teachable Machine Expression Recognition</h2>
+<button onclick="init()">Start Webcam</button>
+
+<div class="container">
+    <div id="webcam-container"></div>
+    <img id="expression-image" alt="Detected Expression">
+</div>
+
+<div id="label-container"></div>
+
+<script>
+    // IMPORTANT: relative path works on GitHub Pages
+    const URL = "./my_model/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    // ✅ EXACT class names from Teachable Machine
+    const classImageMap = {
+        "nerd_face": "images/cat-nerd.png",
+        "sarcastic_shock": "images/shock.jpg",
+        "zesty_blud": "images/zesty.png"
+        // "none" intentionally left out
+    };
+
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        webcam = new tmImage.Webcam(200, 200, true);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        labelContainer = document.getElementById("label-container");
+        labelContainer.innerHTML = "";
+        for (let i = 0; i < maxPredictions; i++) {
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop() {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+        const predictions = await model.predict(webcam.canvas);
+
+        let best = predictions[0];
+        for (let i = 1; i < predictions.length; i++) {
+            if (predictions[i].probability > best.probability) {
+                best = predictions[i];
+            }
+        }
+
+        // Show prediction values
+        for (let i = 0; i < maxPredictions; i++) {
+            labelContainer.childNodes[i].innerHTML =
+                `${predictions[i].className}: ${predictions[i].probability.toFixed(2)}`;
+        }
+
+        const img = document.getElementById("expression-image");
+        const threshold = 0.8;
+
+        // ❗ Hide image if class is "none"
+        if (
+            best.probability > threshold &&
+            best.className !== "none" &&
+            classImageMap[best.className]
+        ) {
+            img.src = classImageMap[best.className];
+            img.style.display = "block";
+        } else {
+            img.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
